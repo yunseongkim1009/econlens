@@ -1,198 +1,280 @@
+<div align="center">
+
+<img src="public/favicon.svg" width="72" height="72" alt="EconLens logo" />
+
 # EconLens
 
-A focused economic research dashboard for exploring country-level indicators over time. Built with Next.js App Router and real World Bank and OECD data, with explicit source attribution, observation dates, and missing-data handling.
+### See the economy through data.
 
-**Built by Yunseong Kim** · [Portfolio](https://yunseong-kim.vercel.app/)
+A modern economic research dashboard for exploring, visualizing, and comparing major indicators across countries and over time.
 
-## Screenshots
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![World Bank](https://img.shields.io/badge/Data-World%20Bank-58A6FF?style=flat-square)](https://data.worldbank.org/)
+[![OECD](https://img.shields.io/badge/Data-OECD-7EE7C0?style=flat-square)](https://www.oecd.org/en/data.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-8B949E?style=flat-square)](LICENSE)
 
-<!-- Add real desktop and mobile screenshots here after choosing a deployment. Never use fabricated statistics. -->
+[Features](#features) · [Data](#data-sources) · [Getting started](#getting-started) · [Architecture](#architecture) · [Roadmap](#roadmap)
 
-Screenshots will be added after the initial deployment.
+</div>
+
+---
+
+EconLens combines the density of an economic terminal with the clarity of a modern dashboard. It uses live, reputable public datasets and always shows the observation year, unit, and source. Missing observations remain missing—EconLens never invents, interpolates, or silently substitutes economic data.
+
+## Preview
+
+> Screenshots will be added after the first public deployment.
+
+| Overview | Country comparison |
+| :------: | :----------------: |
+| Dark research workspace with five headline indicators and historical charts | Compare 2–5 economies on a shared calendar with explicit gaps |
 
 ## Features
 
-- Dark research workspace with responsive sidebar and mobile navigation.
-- Searchable country picker: United States, South Korea, Japan, United Kingdom, Germany, France, Canada, and Australia. Search by name, ISO alpha-2, or alpha-3 code.
-- Five KPI cards: inflation, real GDP growth, unemployment, nominal GDP per capita, and population.
-- Four Recharts time-series charts with tooltips, units, annual axes, source links, and accessible observation tables.
-- 5Y, 10Y, 20Y, and MAX windows, anchored to each indicator’s latest available observation.
-- Shareable country and period state, e.g. `/?country=KR&period=20`. The country remains selected between Overview and About.
-- Independent loading and error states. A failed indicator does not suppress successful results. Retry reloads the overview.
-- Server-side World Bank service with validation, six-hour caching, and a 15-second upstream timeout.
-- An About page documenting purpose, methodology, and limitations.
+<table>
+<tr>
+<td width="50%" valign="top">
 
-**Scope:** Phases 1–3 are implemented, including OECD wages and expanded labor indicators.
+### Research workspace
 
-### Phase 3
+- Inflation, GDP, labor, wages, inequality, and population
+- Five headline KPI cards with observation dates and changes
+- Interactive 5Y, 10Y, 20Y, and MAX chart windows
+- Tooltips, source links, units, and accessible data tables
+- Responsive desktop, tablet, and mobile layouts
 
-- `/wages`: OECD gross average annual wages per full-time-equivalent employee, in constant PPP-adjusted US dollars. The response supplies the price-base year; it is never assumed. No nominal/local-currency substitute is used. Missing compatible series show **Data unavailable**.
-- `/labor`: participation and employment-to-population ratios for ages 15+ (modeled ILO estimates). Additional selector options appear only after observations are retrieved.
-- CSV downloads for individual charts and comparisons, containing unrounded values, dates, units, sources, and OECD status codes where applicable. Missing values remain blank.
-- Shared client caching across overview/detail/comparison views: successful series reused for five minutes. Retry invalidates that client cache. World Bank server caching remains six hours; OECD caching is 24 hours.
-- Arrow-key country navigation, focus handling, responsive navigation fixes, and reduced-motion support.
-- Regression tests for strict wage-series selection, CSV preservation and escaping, cache invalidation, failures, and aborted consumers.
+</td>
+<td width="50%" valign="top">
 
-### Phase 2
+### Country comparison
 
-- `/compare`: choose 2–5 countries and inflation, GDP growth, GDP per capita, unemployment, population, or compatible OECD wages. Wage comparisons fail closed unless the available series share the same verified currency, price base, frequency, and employee coverage. Shared calendar axis, distinct line styles, observation tables, latest values with individual years, partial loading/error handling, and shareable selections.
-- `/inflation`: latest observation, change, period high/low, historical chart, and concise explanation.
-- `/gdp`: switch among nominal GDP, real GDP growth, and nominal GDP per capita.
-- `/labor`: modeled ILO unemployment series and methodological context.
-- `/inequality`: Gini index on a **0–100** scale; survey observations shown as points with no interpolation. Methodological differences are explained.
+- Compare 2–5 countries on one chart
+- Shareable selections through URL parameters
+- Latest-value table with country-specific observation years
+- Compatible OECD wage comparisons with verified price bases
+- CSV exports with unrounded observations and source metadata
 
-Example: `/compare?countries=US,KR,JP&indicator=perCapita&period=20`. Comparison inputs are deduplicated, allowlisted, and limited to five countries. Invalid selections with fewer than two countries fall back to US and South Korea.
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
 
-Individual charts end at each series’ own latest observation. Comparison charts use the latest year across selected countries, with explicit nulls for absent country-years. The latest-value table can contain older values outside the plotted window and labels their years.
+### Reliable data handling
+
+- Independent loading, error, empty, and retry states
+- Strict provider-response validation
+- Missing values remain gaps and are never converted to zero
+- No fabricated fallback statistics
+- Server and client caching with explicit invalidation
+
+</td>
+<td width="50%" valign="top">
+
+### Accessible interaction
+
+- Semantic navigation and labeled controls
+- Keyboard-friendly searchable country selector
+- Visible focus states and reduced-motion support
+- Screen-reader-friendly chart context and observation tables
+- Opt-in development audit powered by axe-core
+
+</td>
+</tr>
+</table>
+
+## Pages
+
+| Route | What it shows |
+| --- | --- |
+| `/` | Economic overview with inflation, GDP growth, unemployment, GDP per capita, and population |
+| `/inflation` | Latest inflation, recent change, period high/low, and historical CPI inflation |
+| `/gdp` | Nominal GDP, real GDP growth, and nominal GDP per capita |
+| `/labor` | Unemployment, labor-force participation, and employment-to-population ratios |
+| `/wages` | Verified OECD average annual wages in constant PPP-adjusted US dollars |
+| `/inequality` | Survey-based Gini observations without interpolation |
+| `/compare` | Shared-calendar comparison for 2–5 countries |
+| `/about` | Purpose, methodology, data sources, and limitations |
+
+Supported countries currently include 🇺🇸 United States, 🇰🇷 South Korea, 🇯🇵 Japan, 🇬🇧 United Kingdom, 🇩🇪 Germany, 🇫🇷 France, 🇨🇦 Canada, and 🇦🇺 Australia.
 
 ## Tech stack
 
-Next.js 16 · React 19 · TypeScript (strict) · Tailwind CSS 4 · Recharts · Lucide React · ESLint 9
+| Layer | Technology |
+| --- | --- |
+| Framework | Next.js 16 App Router, React 19 |
+| Language | TypeScript with strict checking |
+| Styling | Tailwind CSS 4 and shared design tokens |
+| Visualization | Recharts |
+| Icons | Lucide React |
+| Data providers | World Bank Indicators API and OECD SDMX API |
+| Quality | ESLint, Node test runner, axe-core |
+| Deployment | Vercel-compatible Next.js server runtime |
 
-No authentication, database, paid API, or API key is needed. OECD wage requests are also keyless. The server route provides the backend boundary; there are no direct provider requests inside UI components. Charts and controls are client components, while provider access stays server-only.
+No authentication, database, paid API, or API key is required.
 
 ## Getting started
 
-Use Node.js **22.13 or later** (a current LTS release is recommended) and npm.
+### Prerequisites
+
+- Node.js **22.13 or later**
+- npm
+- Outbound HTTPS access to `api.worldbank.org` and `sdmx.oecd.org`
+
+### Install and run
 
 ```bash
+git clone https://github.com/yunseongkim1009/econlens.git
+cd econlens
 npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). No environment variables or API keys are needed.
 
-No environment setup is required. `.env.example` documents the only runtime requirement: outbound HTTPS access to `api.worldbank.org` and `sdmx.oecd.org`. First-time requests depend on provider response time. No fake fallback data is bundled.
+### Project checks
 
 ```bash
 npm run lint       # ESLint
 npm run typecheck  # Strict TypeScript check
-npm test           # Data-window and formatting regression checks
-npm run build      # Production compilation
+npm test           # Data, cache, comparison, CSV, and wage-contract tests
+npm run build      # Optimized production build
 npm start          # Serve the production build
 ```
 
-If your operating system reports `EMFILE` while watching files, try `WATCHPACK_POLLING=true npm run dev` on macOS/Linux. This is a local watcher workaround, not a production requirement.
+If macOS or Linux reports `EMFILE` during development, run `WATCHPACK_POLLING=true npm run dev`.
 
-## Deploy on Vercel
+## Shareable research views
 
-Push this project directory to a GitHub repository, import that repository into Vercel, and select the Next.js preset. Use `npm run build` and the default output settings. No environment secrets are needed. If imported from a monorepo, set the root directory to the directory containing this README and `package.json`.
+Country, period, indicator, and comparison choices live in the URL where appropriate, so a view can be bookmarked or shared.
 
-The application requires a Next.js server runtime; do not use static export. No Vercel-specific SDK or custom deployment adapter is required. Hosting is not provisioned by this repository.
+```text
+/?country=KR&period=20
+/compare?countries=US,KR,JP&indicator=perCapita&period=20
+/compare?countries=US,KR,JP&indicator=wages&period=10
+```
 
-## Data sources and definitions
+Inputs are allowlisted, country selections are deduplicated, and comparisons are limited to five economies.
 
-Most displayed series come from World Bank **World Development Indicators (source 2)** through the [Indicators API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392). Metadata was checked against World Bank documentation during implementation.
+## Data sources
 
-| Indicator      | World Bank code                                                             | Interpretation                                                 |
-| -------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| Inflation      | [FP.CPI.TOTL.ZG](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG)       | Annual CPI percentage change, not a monthly inflation print    |
-| GDP growth     | [NY.GDP.MKTP.KD.ZG](https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG) | Annual real GDP growth                                         |
-| Unemployment   | [SL.UEM.TOTL.ZS](https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS)       | Percent of the labor force; modeled ILO estimate               |
-| GDP per capita | [NY.GDP.PCAP.CD](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD)       | Current US dollars per person; neither constant prices nor PPP |
-| Population     | [SP.POP.TOTL](https://data.worldbank.org/indicator/SP.POP.TOTL)             | Total population                                               |
+### World Bank World Development Indicators
 
-World Bank is the distributor; original compilers vary, including national agencies, IMF, and ILO. Follow each indicator link for complete definitions and provenance. Data is subject to the provider’s applicable [terms and attribution requirements](https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets).
+| Indicator | Code | Unit / interpretation |
+| --- | --- | --- |
+| Inflation | [`FP.CPI.TOTL.ZG`](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG) | Annual CPI percentage change |
+| GDP | [`NY.GDP.MKTP.CD`](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD) | Current US dollars |
+| GDP growth | [`NY.GDP.MKTP.KD.ZG`](https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG) | Annual real GDP growth |
+| GDP per capita | [`NY.GDP.PCAP.CD`](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD) | Current US dollars per person |
+| Unemployment | [`SL.UEM.TOTL.ZS`](https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS) | Share of labor force; modeled ILO estimate |
+| Labor-force participation | [`SL.TLF.CACT.ZS`](https://data.worldbank.org/indicator/SL.TLF.CACT.ZS) | Share of population ages 15+; modeled ILO estimate |
+| Employment ratio | [`SL.EMP.TOTL.SP.ZS`](https://data.worldbank.org/indicator/SL.EMP.TOTL.SP.ZS) | Share of population ages 15+; modeled ILO estimate |
+| Population | [`SP.POP.TOTL`](https://data.worldbank.org/indicator/SP.POP.TOTL) | Total population |
+| Gini index | [`SI.POV.GINI`](https://data.worldbank.org/indicator/SI.POV.GINI) | Survey-based index on a 0–100 scale |
 
-### Methodology
+World Bank is the distributor; original compilers vary by indicator and include national agencies, the IMF, and the ILO. Review the original metadata before using observations for serious research.
 
-- Values are not fabricated, estimated by the app, interpolated, or filled with zero.
-- Latest means the most recent **non-null observation for that series**, not the current calendar year. Provider update dates are distinct from observation years.
-- Change compares the two latest available observations. Percentage-based series use **percentage points**; currency and population changes remain in their original units. The reference observation year appears on each card.
-- Windows use calendar years and end at the last non-null year of each series. A 5Y view includes that year and four preceding years, where available. KPI values do not change when a chart window changes.
-- Missing observations appear as chart gaps. Straight segments connect annual observations, not invented monthly or daily measurements. Accessible tables expose the actual values and gaps.
-- API response shape, finite numeric values, year format, HTTP status, and pagination are checked. API inputs are allowlisted. Each country/indicator is fetched independently and cached by Next.js for six hours. Failed requests show an explicit error.
-- No global “good/bad” interpretation is attached to rising or falling indicators; directional changes use neutral styling.
+### OECD wages
 
-## Project structure
+Average annual wages come from [OECD Average annual wages](https://www.oecd.org/en/data/indicators/average-annual-wages.html), dataset `OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0`.
+
+The adapter accepts only gross mean wages per full-time-equivalent dependent employee in annual, constant-price, PPP-adjusted US dollars. It validates the currency, price basis, base year, frequency, population coverage, scale, country, schema, and duplicate years. Cross-country wage charts fail closed unless the available series share a compatible verified basis.
+
+## Methodology
+
+- **Latest available** means the newest non-null observation for that series. It does not mean the current calendar year.
+- Changes compare the two latest available observations. Percentage series use percentage points.
+- Time windows use calendar years and end at the series’ latest observation. KPI values do not change with the chart window.
+- Missing observations appear as gaps. EconLens does not interpolate, carry values forward, or replace them with zero.
+- Comparison charts use a shared calendar. Each country’s latest-value row retains its own observation year.
+- Gini observations are shown as discrete survey points because coverage is not necessarily annual.
+- Rising and falling indicators use neutral directional styling rather than a universal good/bad interpretation.
+
+## Architecture
 
 ```text
 src/
-  app/
-    api/indicators/route.ts      # Validated backend endpoint
-    compare/page.tsx            # Cross-country comparisons
-    inflation|gdp|labor|inequality/page.tsx # Dedicated indicators
-    about/page.tsx              # Purpose and methodology
-    page.tsx                    # Overview entry point
-    layout.tsx                  # Metadata and shared shell
-    loading.tsx / error.tsx     # Route boundaries
-    globals.css                 # Tailwind import and dashboard theme
-  components/
-    charts/indicator-chart.tsx  # Reusable chart and data table
-    country-selector.tsx       # Searchable country control
-    dashboard.tsx              # Independent loading and URL state
-    kpi-card.tsx                # Latest values and observation changes
-    shell.tsx                  # Navigation and top bar
-  lib/
-    api/oecd.ts                # Server-only OECD wage provider
-    api/oecd-parser.ts         # Fail-closed SDMX CSV normalization
-    csv.ts                     # CSV parsing and export escaping
-    api/worldBank.ts           # Server-only provider service
-    api/client.ts              # Browser-to-backend transport
-    comparison.ts             # Shared calendar alignment, null preservation
-    use-series.ts             # Abortable independent requests for detail/compare views
-    countries.ts               # Supported country metadata
-    indicators.ts              # Central definitions and source links
-    format.ts                  # Formatting and calendar windows
-  types/economics.ts            # Shared typed contracts
-public/favicon.svg
-tests/economics.test.mjs
+├── app/
+│   ├── api/
+│   │   ├── indicators/route.ts   # Validated provider boundary
+│   │   └── export/route.ts       # Safe CSV attachment response
+│   ├── compare/                   # Cross-country research
+│   ├── inflation/ gdp/ labor/     # Indicator workspaces
+│   ├── wages/ inequality/ about/
+│   ├── layout.tsx                 # Metadata and shared shell
+│   └── page.tsx                   # Overview
+├── components/
+│   ├── charts/indicator-chart.tsx
+│   ├── country-selector.tsx
+│   ├── dashboard.tsx
+│   ├── indicator-page.tsx
+│   └── shell.tsx
+├── lib/
+│   ├── api/worldBank.ts           # World Bank service
+│   ├── api/oecd.ts                # OECD wage service
+│   ├── api/oecd-parser.ts         # Fail-closed SDMX normalization
+│   ├── comparison.ts              # Shared calendar and wage compatibility
+│   ├── use-series.ts              # Abortable cached client requests
+│   └── indicators.ts              # Central indicator metadata
+└── types/economics.ts             # Shared contracts
+
+tests/                              # Transformation and provider-contract tests
 ```
+
+The UI never calls third-party providers directly. Browser requests go through validated same-origin API routes. World Bank responses are cached for six hours, OECD responses for 24 hours, and successful client series for five minutes. Failed responses are not cached.
 
 ## API
 
-`GET /api/indicators?country=US&indicator=inflation`
+```http
+GET /api/indicators?country=US&indicator=inflation
+```
 
-Returns `{ indicator, observations: [{ year, value }], updated }`. `value` may be null. `updated` is the provider dataset update date, not the latest observation year. Supported indicator keys are `inflation`, `growth`, `unemployment`, `perCapita`, and `population`, `gdp`, `gini`, `wages`, `participation`, and `employment`. Invalid inputs return 400; upstream failures return 502 without disclosing provider internals to clients.
+The response contains the indicator key, an array of `{ year, value }` observations, and the provider dataset-update date. `value` may be `null`; `updated` is not the latest observation year. Invalid inputs return `400`, while provider failures return `502` without exposing internal details.
 
-### Additional indicator definitions
+## Deploy on Vercel
 
-| Indicator  | World Bank code                                                       | Interpretation                                                                  |
-| ---------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| GDP        | [NY.GDP.MKTP.CD](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD) | Total GDP at current prices in US dollars                                       |
-| Gini index | [SI.POV.GINI](https://data.worldbank.org/indicator/SI.POV.GINI)       | Survey-based income or consumption inequality, 0–100; not a percent growth rate |
+1. Import this repository into Vercel.
+2. Keep the **Next.js** framework preset and default build settings.
+3. Deploy—no environment secrets are required.
 
-Gini changes are index points and may compare nonconsecutive survey years. Points represent provider-reported observations; no line is drawn between them. Existing provider estimates are not estimates created by this application.
+EconLens needs a Next.js server runtime for its API routes and should not use static export.
 
 ## Roadmap
 
-1. **Completed Phase 2:** comparison of 2–5 countries and dedicated inflation, GDP, labor, and inequality pages.
-2. **Completed Phase 3:** strict OECD wage adapter and compatible cross-country wage comparisons, additional labor ratios, CSV chart exports, cache reuse, keyboard improvements, and an opt-in development accessibility audit.
-3. Provider contract tests, end-to-end browser regression coverage, broader country coverage, and a documented release workflow.
-
-For new providers, normalize into the shared series contract and register metadata centrally. Wage contracts must additionally identify currency, price base, frequency, population coverage, and comparability. Do not reuse an unqualified nominal wage number across countries. Return unavailable when a compatible series cannot be retrieved.
+- [x] Responsive overview and indicator pages
+- [x] Cross-country comparison for 2–5 economies
+- [x] Strict OECD wage adapter and compatible wage comparisons
+- [x] Additional labor indicators and CSV exports
+- [x] Keyboard improvements and development accessibility audit
+- [ ] End-to-end browser regression suite
+- [ ] Broader country and provider coverage
+- [ ] Documented release workflow and public deployment
 
 ## Limitations
 
-- Annual data is delayed and revised; this is not a real-time terminal.
-- Latest observation years can differ across countries and indicators. Missing values and provider outages are expected.
-- GDP per capita is not disposable income or a direct living-standards comparison; exchange rates and prices affect nominal US-dollar values.
-- Unemployment definitions and models differ from headline national monthly releases.
-- The initial country list is deliberately limited to eight countries.
-- Provider-side estimates may be present (notably ILO modeled unemployment). “No estimates” refers to EconLens not inventing or interpolating data itself.
-- Automated tests cover data transformations, not the entire browser or live-provider contract. Provider availability must be checked independently.
-- EconLens does not provide financial advice. Verify original datasets for serious research.
+- Economic datasets update at different intervals and can be revised.
+- Observation years differ across countries and indicators; this is not a real-time terminal.
+- Current-dollar GDP comparisons are affected by exchange rates and prices.
+- GDP per capita is not disposable income or a complete measure of living standards.
+- ILO-modeled labor indicators can differ from headline national releases.
+- PPP-adjusted wages improve comparability but do not remove every methodological difference.
+- Provider outages, throttling, and schema changes can temporarily make data unavailable.
+- EconLens is educational and does not provide financial advice. Verify original providers for serious research.
+
+## Contributing
+
+Issues and focused pull requests are welcome. New data providers should normalize into the shared series contract, document their methodology, and fail closed when observations are incompatible or ambiguous.
 
 ## License
 
-Code is released under the [MIT License](LICENSE). Economic data retains its original provider terms and is not relicensed by this project.
+The application code is available under the [MIT License](LICENSE). Economic data remains subject to the original providers’ terms: [World Bank](https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets) and [OECD](https://www.oecd.org/en/about/terms-conditions.html).
 
-## Author
+---
 
-Built by **Yunseong Kim**.
+<div align="center">
 
-[Portfolio — yunseong-kim.vercel.app](https://yunseong-kim.vercel.app/)
+Built by **Yunseong Kim**
 
-## Wage data contract
+[Portfolio](https://yunseong-kim.vercel.app/) · [GitHub](https://github.com/yunseongkim1009)
 
-Source: [OECD Average annual wages](https://www.oecd.org/en/data/indicators/average-annual-wages.html), via `OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0`.
-
-The adapter requires `WG` (wages), `USD_PPP`, annual pay period `A`, constant prices `Q`, `MEAN`, sex dimension `_Z` (not applicable), and unscaled units (`UNIT_MULT=0`). It filters by the requested ISO-3 country and rejects duplicate years, incompatible/missing price bases, unexpected schemas, and invalid numeric values. It never converts currencies itself. The series contract includes `wageBasis` with base year, currency, price basis, frequency, and population coverage. OECD observation status codes are preserved; `A` denotes normal values, other codes should be checked with the provider. The CSV response has no dataset update timestamp, so `updated` is null.
-
-These are gross means, not medians or disposable income. PPP and constant prices address particular comparability issues but do not remove all methodological differences. Cross-country wage charts are shown only when the available series share a verified base year, currency, price basis, frequency, and employee coverage; otherwise the comparison fails closed with an explanation.
-
-Additional World Bank indicators: [participation, SL.TLF.CACT.ZS](https://data.worldbank.org/indicator/SL.TLF.CACT.ZS) and [employment-to-population ratio, SL.EMP.TOTL.SP.ZS](https://data.worldbank.org/indicator/SL.EMP.TOTL.SP.ZS). Both use total population aged 15+ and modeled ILO estimates; unemployment uses the labor force as its denominator.
-
-OECD data retains [OECD terms of use](https://www.oecd.org/en/about/terms-conditions.html), separate from the project’s code license. Live sources can throttle requests or change schemas; such failures show an error, never substituted statistics.
-
-CSV exports are served through a same-origin `POST /api/export` attachment response. The endpoint validates the submitted table and filename, escapes spreadsheet formula-like strings, and does not persist export data. It exports exactly the displayed series window, including blank missing values.
+</div>
