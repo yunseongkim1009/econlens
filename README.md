@@ -14,7 +14,7 @@ A modern economic research dashboard for exploring, visualizing, and comparing m
 [![OECD](https://img.shields.io/badge/Data-OECD-7EE7C0?style=flat-square)](https://www.oecd.org/en/data.html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-8B949E?style=flat-square)](LICENSE)
 
-[Features](#features) · [Data](#data-sources) · [Getting started](#getting-started) · [Architecture](#architecture) · [Roadmap](#roadmap)
+[**Live demo**](https://econlens-one.vercel.app/) · [Features](#features) · [Data](#data-sources) · [Getting started](#getting-started) · [Architecture](#architecture) · [Roadmap](#roadmap)
 
 </div>
 
@@ -24,7 +24,7 @@ EconLens combines the density of an economic terminal with the clarity of a mode
 
 ## Preview
 
-> Screenshots will be added after the first public deployment.
+> Live at [econlens-one.vercel.app](https://econlens-one.vercel.app/). Screenshots are planned for a future documentation update.
 
 | Overview | Country comparison |
 | :------: | :----------------: |
@@ -233,6 +233,8 @@ The response contains the indicator key, an array of `{ year, value }` observati
 
 ## Deploy on Vercel
 
+The production deployment is available at **[econlens-one.vercel.app](https://econlens-one.vercel.app/)**.
+
 1. Import this repository into Vercel.
 2. Keep the **Next.js** framework preset and default build settings.
 3. Deploy—no environment secrets are required.
@@ -248,7 +250,8 @@ EconLens needs a Next.js server runtime for its API routes and should not use st
 - [x] Keyboard improvements and development accessibility audit
 - [ ] End-to-end browser regression suite
 - [ ] Broader country and provider coverage
-- [ ] Documented release workflow and public deployment
+- [x] Public Vercel deployment
+- [ ] Documented release workflow
 
 ## Limitations
 
@@ -275,6 +278,6 @@ The application code is available under the [MIT License](LICENSE). Economic dat
 
 Built by **Yunseong Kim**
 
-[Portfolio](https://yunseong-kim.vercel.app/) · [GitHub](https://github.com/yunseongkim1009)
+[Live demo](https://econlens-one.vercel.app/) · [Portfolio](https://yunseong-kim.vercel.app/) · [GitHub](https://github.com/yunseongkim1009)
 
 </div>
