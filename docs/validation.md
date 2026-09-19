@@ -43,3 +43,12 @@ The local host required WATCHPACK_POLLING=true to avoid its file-watcher limit. 
 - Initial blob-based export could not be confirmed in the embedded browser; implementation was replaced by same-origin server-served CSV attachments. The final browser download event was confirmed.
 - Export endpoint returned attachment headers and all 36 Japan wage observations without numeric alteration; invalid filename returned HTTP 400.
 - A comprehensive screen-reader audit, cross-browser matrix, and automated browser failure injection remain future work. Checks above should not be described as a full accessibility certification or guarantee of ongoing provider availability.
+
+## Completion validation
+
+- Expanded the allowlisted catalog from 8 to 28 economies with unique ISO alpha-2 and alpha-3 codes; catalog invariants are covered by regression tests.
+- Added a searchable country filter to the comparison workspace and verified the filtered Brazil result in the production build.
+- Added Playwright desktop and mobile regression coverage for overview loading, ISO-code country search, URL persistence, comparison filtering, latest-value tables, and mobile navigation focus behavior.
+- Added GitHub Actions jobs for lint, strict TypeScript, 21 unit tests, browser tests, and the production build.
+- Added a documented Vercel release, smoke-test, rollback, and data-provider-change workflow.
+- Production compilation, lint, strict TypeScript, 21 unit tests, and Playwright test discovery passed locally. The current macOS sandbox prevents a separately downloaded Chromium process from registering its Mach service; browser behavior was therefore exercised through the managed in-app browser locally, while the Playwright suite runs in the Ubuntu GitHub Actions job.

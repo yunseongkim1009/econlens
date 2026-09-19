@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import { Search } from "lucide-react";
 import { CsvDownload } from "./csv-download";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -26,6 +28,7 @@ import type { IndicatorKey, Series } from "@/types/economics";
 const comparisonKeys: IndicatorKey[] = [...overviewKeys, "wages"];
 const colors = ["#58a6ff", "#d2a8ff", "#7ee7c0", "#f2cc60", "#ffa198"];
 export function ComparePage() {
+  const [countryQuery, setCountryQuery] = useState("");
   const params = useSearchParams();
   const router = useRouter();
   const period = usePeriod();
@@ -57,6 +60,11 @@ export function ComparePage() {
   );
   const meta = indicators[indicator];
   const selected = codes.map((code) => countries.find((c) => c.code === code)!);
+  const visibleCountries = countries.filter((country) =>
+    `${country.name} ${country.code} ${country.iso3}`
+      .toLowerCase()
+      .includes(countryQuery.toLowerCase()),
+  );
   function update(name: string, value: string) {
     const next = new URLSearchParams(params.toString());
     next.set(name, value);
@@ -92,8 +100,17 @@ export function ComparePage() {
               · Select 2–5 ({codes.length} selected)
             </span>
           </legend>
+          <label className="compare-country-search">
+            <Search size={16} aria-hidden="true" />
+            <span className="sr-only">Search comparison countries</span>
+            <input
+              value={countryQuery}
+              onChange={(event) => setCountryQuery(event.target.value)}
+              placeholder="Search name or ISO code"
+            />
+          </label>
           <div className="country-chips">
-            {countries.map((c) => {
+            {visibleCountries.map((c) => {
               const checked = codes.includes(c.code);
               return (
                 <label key={c.code} className={checked ? "checked" : ""}>
@@ -117,6 +134,9 @@ export function ComparePage() {
               );
             })}
           </div>
+          {!visibleCountries.length && (
+            <p className="muted compare-no-countries">No countries found.</p>
+          )}
         </fieldset>
       </section>
       <div className="section-toolbar">

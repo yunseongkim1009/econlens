@@ -12,6 +12,7 @@ A modern economic research dashboard for exploring, visualizing, and comparing m
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![World Bank](https://img.shields.io/badge/Data-World%20Bank-58A6FF?style=flat-square)](https://data.worldbank.org/)
 [![OECD](https://img.shields.io/badge/Data-OECD-7EE7C0?style=flat-square)](https://www.oecd.org/en/data.html)
+[![CI](https://github.com/yunseongkim1009/econlens/actions/workflows/ci.yml/badge.svg)](https://github.com/yunseongkim1009/econlens/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-8B949E?style=flat-square)](LICENSE)
 
 [**Live demo**](https://econlens-one.vercel.app/) · [Features](#features) · [Data](#data-sources) · [Getting started](#getting-started) · [Architecture](#architecture) · [Roadmap](#roadmap)
@@ -24,7 +25,7 @@ EconLens combines the density of an economic terminal with the clarity of a mode
 
 ## Preview
 
-> Live at [econlens-one.vercel.app](https://econlens-one.vercel.app/). Screenshots are planned for a future documentation update.
+> Live at [econlens-one.vercel.app](https://econlens-one.vercel.app/).
 
 | Overview | Country comparison |
 | :------: | :----------------: |
@@ -96,7 +97,7 @@ EconLens combines the density of an economic terminal with the clarity of a mode
 | `/compare` | Shared-calendar comparison for 2–5 countries |
 | `/about` | Purpose, methodology, data sources, and limitations |
 
-Supported countries currently include 🇺🇸 United States, 🇰🇷 South Korea, 🇯🇵 Japan, 🇬🇧 United Kingdom, 🇩🇪 Germany, 🇫🇷 France, 🇨🇦 Canada, and 🇦🇺 Australia.
+EconLens currently supports 28 economies across North America, Latin America, Europe, Asia, Africa, and Oceania. Search by country name, ISO alpha-2 code, or ISO alpha-3 code. Wage coverage remains narrower because the OECD series is shown only when a compatible observation exists.
 
 ## Tech stack
 
@@ -138,6 +139,7 @@ Open [http://localhost:3000](http://localhost:3000). No environment variables or
 npm run lint       # ESLint
 npm run typecheck  # Strict TypeScript check
 npm test           # Data, cache, comparison, CSV, and wage-contract tests
+npm run test:e2e   # Desktop and mobile browser regression tests
 npm run build      # Optimized production build
 npm start          # Serve the production build
 ```
@@ -219,6 +221,8 @@ src/
 └── types/economics.ts             # Shared contracts
 
 tests/                              # Transformation and provider-contract tests
+e2e/                                # Desktop and mobile browser regressions
+.github/workflows/ci.yml             # Pull-request and main-branch checks
 ```
 
 The UI never calls third-party providers directly. Browser requests go through validated same-origin API routes. World Bank responses are cached for six hours, OECD responses for 24 hours, and successful client series for five minutes. Failed responses are not cached.
@@ -240,6 +244,7 @@ The production deployment is available at **[econlens-one.vercel.app](https://ec
 3. Deploy—no environment secrets are required.
 
 EconLens needs a Next.js server runtime for its API routes and should not use static export.
+See [docs/releasing.md](docs/releasing.md) for the pre-merge, deployment, smoke-test, and rollback workflow.
 
 ## Roadmap
 
@@ -248,10 +253,11 @@ EconLens needs a Next.js server runtime for its API routes and should not use st
 - [x] Strict OECD wage adapter and compatible wage comparisons
 - [x] Additional labor indicators and CSV exports
 - [x] Keyboard improvements and development accessibility audit
-- [ ] End-to-end browser regression suite
-- [ ] Broader country and provider coverage
+- [x] End-to-end desktop and mobile browser regression suite
+- [x] Broader country coverage across 28 economies
+- [ ] Additional compatible data providers
 - [x] Public Vercel deployment
-- [ ] Documented release workflow
+- [x] Documented release workflow
 
 ## Limitations
 
