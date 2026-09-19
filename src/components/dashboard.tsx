@@ -45,12 +45,9 @@ function CountryDashboard({
   return (
     <>
       <div className="intro">
-        <span className="eyebrow">Research workspace · Country overview</span>
+        <span className="eyebrow">COUNTRY / {country.iso3} / ANNUAL SERIES</span>
         <h1>Economic Overview</h1>
-        <p>
-          See the economy through data. Explore indicators, follow trends, and
-          understand how economies change.
-        </p>
+        <p>World Bank and OECD indicators, reported with their latest available observation.</p>
       </div>
       <div className="overview-context">
         <div className="country-title">
@@ -79,7 +76,7 @@ function CountryDashboard({
       </div>
       <div className="section-toolbar">
         <div>
-          <h2>Historical trends</h2>
+          <h2>Series history</h2>
           <p>
             Annual observations. Each series ends at its latest available year.
           </p>

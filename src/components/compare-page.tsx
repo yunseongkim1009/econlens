@@ -73,11 +73,9 @@ export function ComparePage() {
   return (
     <>
       <div className="intro">
-        <span className="eyebrow">Research workspace · Cross-country view</span>
+        <span className="eyebrow">COMPARE / MULTI-COUNTRY / ANNUAL SERIES</span>
         <h1>Compare Countries</h1>
-        <p>
-          Explore the same indicator across economies, on a shared calendar.
-        </p>
+        <p>One indicator, aligned to a shared calendar with missing observations left blank.</p>
       </div>
       <section className="compare-controls">
         <label className="indicator-select">

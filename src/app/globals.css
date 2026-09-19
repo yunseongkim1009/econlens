@@ -1523,3 +1523,145 @@ main {
   border: 1px solid var(--blue);
   border-radius: 5px;
 }
+
+/* Statistical brief details */
+.sidebar nav svg,
+.sidebar-bottom > svg {
+  display: none;
+}
+
+.brand-mark {
+  display: none;
+}
+
+.brand::before {
+  color: var(--blue);
+  content: "EL";
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-right: 3px;
+}
+
+.brand-dot {
+  display: none;
+}
+
+.sidebar nav {
+  counter-reset: section;
+}
+
+.nav-item {
+  counter-increment: section;
+  gap: 9px;
+}
+
+.nav-item::before {
+  color: #566171;
+  content: counter(section, decimal-leading-zero);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  width: 18px;
+}
+
+.nav-item.active::before {
+  color: var(--blue);
+}
+
+.nav-divider + .nav-item::before {
+  content: "—";
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.34fr) 1fr;
+  max-width: 980px;
+}
+
+.intro .eyebrow {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  padding-top: 7px;
+}
+
+.intro h1,
+.intro > p {
+  grid-column: 2;
+}
+
+.intro h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin-top: 0;
+}
+
+.intro > p {
+  max-width: 650px;
+}
+
+.kpi-grid {
+  counter-reset: metric;
+}
+
+.kpi {
+  counter-increment: metric;
+}
+
+.kpi h2::before {
+  color: #566171;
+  content: counter(metric, decimal-leading-zero) "  ";
+}
+
+.section-toolbar h2::before {
+  color: #566171;
+  content: "A. ";
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.chart-grid {
+  counter-reset: figure;
+}
+
+.chart-card {
+  counter-increment: figure;
+}
+
+.chart-card .chart-header h2::before {
+  color: #697586;
+  content: "FIG " counter(figure, decimal-leading-zero) " / ";
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.comparison-chart .chart-header h2::before,
+.detail-chart .chart-header h2::before {
+  content: "SERIES / ";
+}
+
+.sidebar-bottom {
+  border-top: 1px solid #252c35;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  line-height: 1.5;
+  padding-top: 15px;
+}
+
+.author {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@media (max-width: 720px) {
+  .intro {
+    display: block;
+  }
+
+  .intro .eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    padding-top: 0;
+  }
+}
