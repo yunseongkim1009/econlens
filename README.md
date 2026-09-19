@@ -255,7 +255,6 @@ See [docs/releasing.md](docs/releasing.md) for the pre-merge, deployment, smoke-
 - [x] Keyboard improvements and development accessibility audit
 - [x] End-to-end desktop and mobile browser regression suite
 - [x] Broader country coverage across 28 economies
-- [ ] Additional compatible data providers
 - [x] Public Vercel deployment
 - [x] Documented release workflow
 
