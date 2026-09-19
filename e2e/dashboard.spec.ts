@@ -77,8 +77,8 @@ test("comparison supports searched countries and shared latest values", async ({
   );
 
   await page.getByPlaceholder("Search name or ISO code").fill("Brazil");
-  await expect(page.getByText("Brazil", { exact: true })).toBeVisible();
-  await expect(page.getByText("Germany", { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("checkbox", { name: /Brazil/ })).toBeVisible();
+  await expect(page.getByRole("checkbox", { name: /Germany/ })).toHaveCount(0);
 });
 
 test("mobile navigation opens, traps focus, and closes with Escape", async ({
