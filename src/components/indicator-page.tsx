@@ -77,7 +77,7 @@ export function IndicatorPage({ topic }: { topic: Topic }) {
   return (
     <>
       <div className="intro">
-        <span className="eyebrow">ECONLENS / INDICATOR RESEARCH</span>
+        <span className="eyebrow">Research workspace · Indicator detail</span>
         <h1>{config.title}</h1>
         <p>
           {country.flag} {country.name} · {country.iso3} · Source:{" "}

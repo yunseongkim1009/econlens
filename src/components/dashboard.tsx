@@ -45,7 +45,7 @@ function CountryDashboard({
   return (
     <>
       <div className="intro">
-        <span className="eyebrow">ECONLENS / THE ECONOMIC PICTURE</span>
+        <span className="eyebrow">Research workspace · Country overview</span>
         <h1>Economic Overview</h1>
         <p>
           See the economy through data. Explore indicators, follow trends, and

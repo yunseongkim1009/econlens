@@ -73,7 +73,7 @@ export function ComparePage() {
   return (
     <>
       <div className="intro">
-        <span className="eyebrow">ECONLENS / CROSS-COUNTRY RESEARCH</span>
+        <span className="eyebrow">Research workspace · Cross-country view</span>
         <h1>Compare Countries</h1>
         <p>
           Explore the same indicator across economies, on a shared calendar.

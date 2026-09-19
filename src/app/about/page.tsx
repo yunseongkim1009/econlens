@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <article className="about">
-      <span className="eyebrow">ABOUT THE PROJECT</span>
+      <span className="eyebrow">Project notes · Methods and sources</span>
       <h1>A clearer view of the economy.</h1>
       <p className="about-lead">
         EconLens is an independent educational and data visualization project
